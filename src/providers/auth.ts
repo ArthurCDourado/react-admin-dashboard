@@ -1,5 +1,7 @@
 import { AuthProvider } from "@refinedev/core";
 
+// import { User } from "@/graphql/schema.types";
+
 import { API_URL, dataProvider } from "./data";
 
 /**
@@ -20,12 +22,14 @@ export const authProvider: AuthProvider = {
         meta: {
           variables: { email },
           rawQuery: `
-            mutation Login($email: String!) {
-                login(loginInput: { email: $email }) {
-                  accessToken,
-                }
-              }
-            `,
+                mutation Login($email: String!) {
+                    login(loginInput: {
+                      email: $email
+                    }) {
+                      accessToken,
+                    }
+                  }
+                `,
         },
       });
 
@@ -59,7 +63,6 @@ export const authProvider: AuthProvider = {
     if (error.statusCode === "UNAUTHENTICATED") {
       return {
         logout: true,
-        ...error,
       };
     }
 
@@ -73,12 +76,12 @@ export const authProvider: AuthProvider = {
         headers: {},
         meta: {
           rawQuery: `
-            query Me {
-                me {
-                  name
-                }
-              }
-        `,
+                    query Me {
+                        me {
+                          name
+                        }
+                      }
+                `,
         },
       });
 
@@ -107,18 +110,18 @@ export const authProvider: AuthProvider = {
           : {},
         meta: {
           rawQuery: `
-            query Me {
-              me {
-                id,
-                name,
-                email,
-                phone,
-                jobTitle,
-                timezone
-                avatarUrl
-              }
-            }
-        `,
+                    query Me {
+                        me {
+                            id,
+                            name,
+                            email,
+                            phone,
+                            jobTitle,
+                            timezone
+                            avatarUrl
+                        }
+                      }
+                `,
         },
       });
 
