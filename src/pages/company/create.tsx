@@ -1,4 +1,3 @@
-import React from 'react'
 import { CompanyList } from './list'
 import { Form, Input, Modal, Select } from 'antd'
 import { useModalForm, useSelect } from '@refinedev/antd'
@@ -6,6 +5,8 @@ import { useGo } from '@refinedev/core'
 import { CREATE_COMPANY_MUTATION } from '@/graphql/mutations'
 import { USERS_SELECT_QUERY } from '@/graphql/queries'
 import SelectOptionWithAvatar from '@/components/select-option-with-avatar'
+import { GetFieldsFromList } from '@refinedev/nestjs-query'
+import { UsersSelectQuery } from '@/graphql/types'
 
 const Create = () => {
     const go = useGo()
@@ -30,7 +31,7 @@ const Create = () => {
         }
     })
 
-    const { selectProps, queryResult } = useSelect({
+    const { selectProps, queryResult } = useSelect<GetFieldsFromList<UsersSelectQuery>>({
         resource: 'users',
         optionLabel: 'name',
         meta: {
@@ -65,14 +66,14 @@ const Create = () => {
                             {...selectProps}
                             options={
                                 queryResult.data?.data.map((user) => ({
-                                    values: user.id,
+                                    value: user.id,
                                     label: (
                                         <SelectOptionWithAvatar
                                             name={user.name}
                                             avatarUrl={user.avatarUrl ?? undefined}
                                         />
                                     )
-                                }))
+                                })) ?? []
                             }
                         />
                     </Form.Item>

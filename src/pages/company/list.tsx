@@ -12,7 +12,7 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
   const go = useGo()
   const { tableProps, filters } = useTable({
     resource: 'companies',
-    onSearch: (values) => {
+    onSearch: (values: any) => {
       return [
         {
           field: 'name',
@@ -83,7 +83,7 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
                 <Input placeholder='Search' />
               </FilterDropdown>
             )}
-            render={(value, record) => (
+            render={(value, record: any) => (
               <Space>
                 <CustomAvatar 
                   shape='square' 
@@ -98,7 +98,7 @@ export const CompanyList = ({ children }: React.PropsWithChildren) => {
           <Table.Column 
             dataIndex="totalRevenue"
             title="Open deals amount"
-            render={(value, company) => (
+            render={(value, company: any) => (
               <Text>
                 {currencyNumber(company?.dealsAggregate?.[0].sum?.value || 0)}
               </Text>
